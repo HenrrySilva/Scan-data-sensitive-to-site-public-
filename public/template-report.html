@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Hello world!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500;1,700&family=Rubik:ital,wght@0,400;0,600;0,700;1,300;1,400&display=swap"
+    rel="stylesheet">
+</head>
+
+<body style="font-family: 'Rubik', sans-serif; font-weight: 400; border: solid 1px #CCCCCC;">
+  <div style="border: solid 1px #CCCCCC;">
+
+    <header style="display:flex; width:100%; gap: 1%;">
+      <div style="background-color: #0968a0; color: #c3d8e4; width:80%; height: 30px;">
+      </div>
+      <img src='./images/lgpd.png' width='200'>
+    </header>
+    <h1 style="color: #0968a0; text-transform: uppercase; font-weight: bolder; text-align: center;">
+      scanner data public sensitive
+    </h1>
+    <h2
+      style="color: #0968a0; text-transform: uppercase; font-weight: bolder; text-align: center; margin-top: 3px; margin-bottom: 3px;">
+      Relatório referente aos dados sensíveis expostos
+    </h2>
+    <h4 style="color: #0968a0; text-transform: uppercase; font-weight: bolder; text-align: center;">
+      Site target: {{urlTarget}}
+    </h4>
+    <table
+      style='border:#CCCCCC solid 1px; border-left: none; border-right: none; text-transform: uppercase; font-size: 10px; width:100%; margin-bottom: 8px; margin-top: 70px;'>
+      <tr>
+        <td>
+          <div style='display:flex; flex-direction: column; border-right: solid 1px #CCCCCC; padding-left: 2px;'>
+            <span>Início do scanner</span>
+            <span>{{startsAt}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display:flex; flex-direction: column; border-right: solid 1px #CCCCCC; padding-left: 2px;'>
+            <span>Termino do scanner</span>
+            <span>{{endsAt}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display:flex; flex-direction: column; border-right: solid 1px #CCCCCC; padding-left: 2px;'>
+            <span>Total de página scaneada</span>
+            <span>{{totalOfPagesScanned}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display:flex; flex-direction: column; border-right: solid 1px #CCCCCC; padding-left: 2px;'>
+            <span>Total de dados sensiveis achados</span>
+            <span>{{totalOfPagesWithDataSensitive}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display:flex; flex-direction: column; '>
+            <span>Total de arquivo com erros</span>
+            <span>{{totalOfPagesWithErros}}</span>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div style='border:#CCCCCC solid 1px; margin-bottom: 10px; border-right: none; border-left: none;'>
+      <h2
+        style="color: #0968a0; margin-top: 10px; margin-bottom: 10px; text-transform: uppercase; font-weight: bolder; font-size: 16px; text-align: center;">
+        Dados sensíveis
+      </h2>
+
+      {{#each datasMatch}}
+      <div>
+        <h2
+          style="background-color: #0968a0; color: #ebebeb; padding: 5px; font-size: 14px; text-transform: uppercase; font-weight: bolder; text-align: center;">
+          {{@key}}
+        </h2>
+        <div style="padding: 6px;">
+          {{#each this}}
+          {{#if this}}
+          {{this}}
+          {{else}}
+          Nenhum dados encontrado...
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+
+    </div>
+
+    <div style='border:#CCCCCC solid 1px; margin-bottom: 10px; border-right: none; border-left: none;'>
+      <h2
+        style="color: #0968a0; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; font-weight: bolder; font-size: 16px; text-align: center;">
+        Quantidade de dados sensíveis por página
+      </h2>
+      <ul style='list-style: none; padding:0; margin: 0;'>
+        {{#each linksAndAmountMatchOfArchive}}
+        <li
+          style='display: flex; padding-left: 2px; padding-right: 2px; justify-content: space-between; border-bottom:#CCCCCC solid 1px; margin-bottom: 2px;'>
+          <span>{{this.linkPDF}}</span>
+          <span>{{this.amount}}</span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div style='border:#CCCCCC solid 1px; border-left: none; border-right: none;'>
+      <h2
+        style="color: #0968a0; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; font-weight: bolder; font-size: 16px; text-align: center;">
+        Identificação da fonte dos arquivos escaneados
+      </h2>
+      <ul style='list-style: none; padding:5px; margin: 0;'>
+        {{#each archiveIds}}
+        {{this}}
+        {{/each}}
+      </ul>
+      <legend style="font-size: 10px; color: red; margin-top: 15px; margin-bottom: 10px;">
+        * Para acessar o arquivo referente as identificações descrita acima, basta fornecer o ID como valor para
+        parâmetro <b>INT_ARQ</b> </legend>
+    </div>
+    <div style='border:#CCCCCC solid 1px; border-left: none; border-right: none;'>
+      <h2
+        style="color: #0968a0; margin-top: 9px; margin-bottom: 9px; text-transform: uppercase; font-weight: bolder; font-size: 16px; text-align: center;">
+        Links das páginas com erros
+      </h2>
+      <ul style='list-style: none; padding:0; margin: 0;'>
+        {{#each linksPDFWithErros}}
+        <li style='border:#CCCCCC solid 1px; border-left: none; border-right: none; padding-left: 2px;'>{{this}}</li>
+        <br />
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+  <footer style="text-align: center; margin-top: 10px; text-transform: uppercase; font-size: 10px;">
+    <br><b>IMPORTANTE</b>: Este relatório foi confeccionado automaticamente pelo software <i>Scan data sensitive to site
+      public</i> ©.
+    <br />
+    <br />
+    Este Software é de código aberto. @author: <b>HenriqueSilva!</b>
+    <br />
+    <i>O código fonte está hospedado na plataforma GitHub e pode ser acessado através deste link: <a
+        href="https://github.com/HenrrySilva/Scan-data-sensitive-to-site-public">https://github.com/HenrrySilva/Scan-data-sensitive-to-site-public</a></i>
+    </h3>
+    <br />
+    <h4>As informações usadas pelo software para gerar este relatório são todas públicas e estão expostos para
+      todos os usuários do site.</h4>
+    <img width="60"
+      src="https://w7.pngwing.com/pngs/914/758/png-transparent-github-social-media-computer-icons-logo-android-github-logo-computer-wallpaper-banner-thumbnail.png" />
+  </footer>
+</body>
+
+</html>

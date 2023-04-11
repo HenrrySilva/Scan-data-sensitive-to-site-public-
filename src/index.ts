@@ -1,0 +1,2 @@
+
+import '@infra/cli/index';
