@@ -2,7 +2,11 @@
 
 This software is capable of scanning public pages looking for sensitive data. The architecture was developed using clean architecture concepts.
 
-![license MIT](https://img.shields.io/bower/l/MI)
+![license MIT](https://img.shields.io/bower/l/MI) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/HenrrySilva/scan-data-sensitive-to-site-public) ![GitHub issues](https://img.shields.io/github/issues/HenrrySilva/scan-data-sensitive-to-site-public) ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/HenrrySilva/scan-data-sensitive-to-site-public)
+
+## Dependency
+
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/puppeteer) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/axios) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/uuid) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/handlebars) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/html5-to-pdf) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/node-html-parser) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/pdf-parse) ![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/HenrrySilva/scan-data-sensitive-to-site-public/validation-br)
 ## Installation
 
 Use the package manager [yarn](https://www.npmjs.com/package/yarn).
