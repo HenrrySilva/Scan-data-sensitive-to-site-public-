@@ -1,6 +1,5 @@
-import { uuidAdapter } from "@domain/adapters/uuid";
 import { ArchiveContentException } from "@domain/exceptions/archive-content-exception";
-import { OptionalsValues } from "@types-customs/helpers";
+import { Attributes } from "@types-customs/helpers";
 
 export class Archive {
 
@@ -8,14 +7,13 @@ export class Archive {
     public url: string;
     public content: string;
 
-    constructor(archive: OptionalsValues<Archive, 'id'>) {
+    constructor(archive: Attributes<Archive>) {
         try {
-
             new URL(archive.url)
             if (!archive.content || archive.content.length <= 0)
                 throw new ArchiveContentException('You need inform a value to attribute content');
 
-            this.id = archive.id ?? uuidAdapter();
+            this.id = archive.id;
             this.url = archive.url;
             this.content = archive.content
 
@@ -23,5 +21,7 @@ export class Archive {
             throw error;
         }
     }
+
+    getTeste(){}
 
 }

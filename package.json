@@ -17,7 +17,6 @@
   "devDependencies": {
     "@types/html5-to-pdf": "^4.0.1",
     "@types/pdf-parse": "^1.1.1",
-    "@types/uuid": "^9.0.1",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.5",
     "tsx": "^3.12.3",
@@ -31,7 +30,6 @@
     "node-html-parser": "^6.1.4",
     "pdf-parse": "^1.1.1",
     "puppeteer": "^19.7.2",
-    "uuid": "^9.0.0",
     "validation-br": "^1.4.4"
   }
 }

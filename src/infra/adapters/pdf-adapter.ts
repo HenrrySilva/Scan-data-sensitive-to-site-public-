@@ -2,7 +2,6 @@ import path from 'node:path'
 import axios from "axios";
 import HTML5ToPDF from "html5-to-pdf";
 const PdfParse = require("pdf-parse")
-import MAIN_SETTINGS from '@configs/main-settings';
 import { Archive } from '@domain/entities/archive';
 import { ParserArchiveContract } from '@application/contracts/parser-archive';
 
@@ -12,8 +11,12 @@ export class PDFAdapter implements ParserArchiveContract {
         try {
             const { data: bufferPDF } = await axios.get(link, { responseType: 'arraybuffer' })
             const { text: content } = await PdfParse(bufferPDF);
-            const archiveId = new URL(link).searchParams.get('INT_ARQ')
-            return new Archive({ content, url: link, id: archiveId ?? undefined })
+            const archiveId = new URL(link).searchParams.get('INT_ARQ');
+
+            if (!archiveId)
+                throw new Error('Error getting id of archive.');
+
+            return new Archive({ content, url: link, id: archiveId })
         } catch (error) {
             throw error;
         }

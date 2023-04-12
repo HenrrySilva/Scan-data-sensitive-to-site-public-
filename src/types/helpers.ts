@@ -1,6 +1,6 @@
+/**
+ * Types helpers
+ */
 
-export type ReplaceValues<T, R extends Partial<Record<keyof T, any>>> = {
-    [K in keyof T]: K extends keyof R ? R[K] : T[K]
-}
+export type Attributes<T> = { [P in keyof T as T[P] extends Function ? never : P ] : T[P] }
 
-export type OptionalsValues<T, V extends keyof T> = Partial<T> & Omit<T, V>
