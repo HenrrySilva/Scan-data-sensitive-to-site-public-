@@ -5,7 +5,6 @@ export class CPFCheck extends CheckMatch {
 
     execute(content: string) {
         const matches = content.match(/\d{3}[.-]?\d{3}[.-]?\d{3}[.-]?\d{2}/gm);
-
         if (matches == null)
             return { cpf: null }
 

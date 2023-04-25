@@ -5,14 +5,8 @@ export class VoterRegistrationCheck extends CheckMatch {
 
     /** @override */
     execute(content: string) {
-        try {
-            const matches = content.match(/[0-9]{11}/gm);
-
-            return { "Título de eleitor": matches?.filter(isTituloEleitor) ?? null }
-
-        } catch (error) {
-            throw error;
-        }
+        const matches = content.match(/[0-9]{11}/gm);
+        return { "Título de eleitor": matches?.filter(isTituloEleitor) ?? null }
     }
 
 } 
