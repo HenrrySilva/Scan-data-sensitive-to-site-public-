@@ -23,59 +23,55 @@ export class ScanFullUseCases {
     }
 
     async* execute(input?: InputScanFullUseCases): AsyncGenerator<OutputScanFullUseCases, OutputScanFullUseCases> {
-        try {
-            const numberPagesFound = await this.crawler.getCountOfficialDiaryPages();
-            this.amountFoundPagesToScanned = input?.maxPage && input.maxPage <= numberPagesFound ? input.maxPage : numberPagesFound
+        const numberPagesFound = await this.crawler.getCountOfficialDiaryPages();
+        this.amountFoundPagesToScanned = input?.maxPage && input.maxPage <= numberPagesFound ? input.maxPage : numberPagesFound
 
-            let oldOutput: OutputScanFullUseCases | null = null;
-            const startsAt = Date.now();
+        let oldOutput: OutputScanFullUseCases | null = null;
+        const startsAt = Date.now();
 
-            for (let i = 1; this.amountFoundPagesToScanned >= i; i++) {
-                this.currentNumberPageScanned = i;
-                const linkArchivesFound = await this.crawler.getLinksArchiveByPageNumber(i);
+        for (let i = 1; this.amountFoundPagesToScanned >= i; i++) {
+            this.currentNumberPageScanned = i;
+            const linkArchivesFound = await this.crawler.getLinksArchiveByPageNumber(i);
 
-                const asyncLinksConvertedToArchives = linkArchivesFound.map<Promise<Archive | string>>(async linkArchiveFound => {
-                    try {
-                        const archiveConverted = await this.parserArchive.convertLinkToArchive(linkArchiveFound);
-                        return archiveConverted
-                    } catch (error) {
-                        return linkArchiveFound
-                    }
-                })
+            const asyncLinksConvertedToArchives = linkArchivesFound.map<Promise<Archive | string>>(async linkArchiveFound => {
+                try {
+                    const archiveConverted = await this.parserArchive.convertLinkToArchive(linkArchiveFound);
+                    return archiveConverted
+                } catch (error) {
+                    return linkArchiveFound
+                }
+            })
 
-                const linksConvertedToArchives = await Promise.all(asyncLinksConvertedToArchives);
+            const linksConvertedToArchives = await Promise.all(asyncLinksConvertedToArchives);
 
-                const archivesFounds = linksConvertedToArchives.filter(linkConvertedToArchive =>
-                    typeof linkConvertedToArchive !== 'string') as Archive[]
+            const archivesFounds = linksConvertedToArchives.filter(linkConvertedToArchive =>
+                typeof linkConvertedToArchive !== 'string') as Archive[]
 
-                const linkArchivesWithError = linksConvertedToArchives.filter(linkConvertedToArchive =>
-                    typeof linkConvertedToArchive === 'string') as string[]
+            const linkArchivesWithError = linksConvertedToArchives.filter(linkConvertedToArchive =>
+                typeof linkConvertedToArchive === 'string') as string[]
 
-                this.linkArchivesWithError = [...this.linkArchivesWithError, ...linkArchivesWithError];
+            this.linkArchivesWithError = [...this.linkArchivesWithError, ...linkArchivesWithError];
 
-                const scannedArchives = new Scanner()
-                    .scan(archivesFounds, this.checkMatchComponents)
-                    .listArchiveScanned;
+            const scannedArchives = new Scanner()
+                .scan(archivesFounds, this.checkMatchComponents)
+                .listArchiveScanned;
 
-                this.scannedArchives = [...this.scannedArchives, ...scannedArchives];
+            this.scannedArchives = [...this.scannedArchives, ...scannedArchives];
 
-                oldOutput = new OutputScanFullUseCases({
-                    progress: Number(((this.currentNumberPageScanned / this.amountFoundPagesToScanned) * 100)
-                        .toFixed(1)),
-                    startsAt,
-                    endsAt: Date.now(),
-                    amountFoundPagesToScanned: this.amountFoundPagesToScanned,
-                    linkArchivesWithError: this.linkArchivesWithError,
-                    currentNumberPageScanned: this.currentNumberPageScanned,
-                    scannedArchives: this.scannedArchives
-                });
+            oldOutput = new OutputScanFullUseCases({
+                progress: Number(((this.currentNumberPageScanned / this.amountFoundPagesToScanned) * 100)
+                    .toFixed(1)),
+                startsAt,
+                endsAt: Date.now(),
+                amountFoundPagesToScanned: this.amountFoundPagesToScanned,
+                linkArchivesWithError: this.linkArchivesWithError,
+                currentNumberPageScanned: this.currentNumberPageScanned,
+                scannedArchives: this.scannedArchives
+            });
 
-                yield oldOutput;
-            }
-
-            return oldOutput as OutputScanFullUseCases;
-        } catch (error) {
-            throw error;
+            yield oldOutput;
         }
+
+        return oldOutput as OutputScanFullUseCases;
     }
 }

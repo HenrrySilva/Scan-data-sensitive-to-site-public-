@@ -11,24 +11,20 @@ export class ChecksMatch extends CheckMatch {
     }
 
     execute(content: string): MatchesContent {
-        try {
-            return this.children.reduce((previous: MatchesContent, current: CheckMatch) => {
+        return this.children.reduce((previous: MatchesContent, current: CheckMatch) => {
 
-                const dataMatches = current.execute(content)
+            const dataMatches = current.execute(content)
 
-                const data = Object.keys(dataMatches).reduce((previousOfKeys: MatchesContent, currentKey: string) => {
-                    const [dataMatch, dataPreviousMatches] = [dataMatches[currentKey], previous[currentKey]];
-                    return {
-                        ...previousOfKeys,
-                        [currentKey]: dataMatch || dataPreviousMatches ?
-                            [...dataPreviousMatches ?? [], ...dataMatch ?? []] : null
-                    }
-                }, {})
-
-                return { ...previous, ...data, }
+            const data = Object.keys(dataMatches).reduce((previousOfKeys: MatchesContent, currentKey: string) => {
+                const [dataMatch, dataPreviousMatches] = [dataMatches[currentKey], previous[currentKey]];
+                return {
+                    ...previousOfKeys,
+                    [currentKey]: dataMatch || dataPreviousMatches ?
+                        [...dataPreviousMatches ?? [], ...dataMatch ?? []] : null
+                }
             }, {})
-        } catch (error) {
-            throw error;
-        }
+
+            return { ...previous, ...data, }
+        }, {})
     }
 }

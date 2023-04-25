@@ -8,20 +8,13 @@ export class Archive {
     public content: string;
 
     constructor(archive: Attributes<Archive>) {
-        try {
-            new URL(archive.url)
-            if (!archive.content || archive.content.length <= 0)
-                throw new ArchiveContentException('You need inform a value to attribute content');
+        new URL(archive.url)
+        if (!archive.content || archive.content.length <= 0)
+            throw new ArchiveContentException('You need inform a value to attribute content');
 
-            this.id = archive.id;
-            this.url = archive.url;
-            this.content = archive.content
-
-        } catch (error) {
-            throw error;
-        }
+        this.id = archive.id;
+        this.url = archive.url;
+        this.content = archive.content
     }
-
-    getTeste(){}
 
 }

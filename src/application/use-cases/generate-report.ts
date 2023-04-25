@@ -75,16 +75,11 @@ export class GenerateReportUseCases {
     }
 
     async execute(scan: InputExecuteGenerateReport) {
-        try {
-
-            const options: ParserArchiveContract.OptionsCreate = {
-                output: GenerateReportUseCases.pathOutput
-            }
-            const strTemplate = fs.readFileSync(path.resolve('public', 'template-report.html'), 'utf-8');
-            const template = handlebars.compile(strTemplate);
-            await this.pdfAdapter.create(template(this.getDataToArchivePrint(scan)), options);
-        } catch (error) {
-            throw error;
+        const options: ParserArchiveContract.OptionsCreate = {
+            output: GenerateReportUseCases.pathOutput
         }
+        const strTemplate = fs.readFileSync(path.resolve('public', 'template-report.html'), 'utf-8');
+        const template = handlebars.compile(strTemplate);
+        await this.pdfAdapter.create(template(this.getDataToArchivePrint(scan)), options);
     }
 }
