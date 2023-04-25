@@ -10,6 +10,8 @@ import mainSettings from '@configs/main-settings';
 
 export class GenerateReportUseCases {
 
+    public static pathOutput: string = path.resolve(`${mainSettings.DIRECTORY_OUTPUT_REPORTER}/report-${Date.now()}.pdf`);
+
     constructor(private pdfAdapter: PDFAdapter) { }
 
     private getTotalOfPagesWithDataSensitive(scannedArchives: ArchiveScanned[]) {
@@ -28,7 +30,7 @@ export class GenerateReportUseCases {
 
             const data = Object.keys(dataMatches).reduce((previousOfKeys: MatchesContent, currentKey: string) => {
                 const [previousDataMatch, currentDataMatch] = [previous[currentKey], dataMatches[currentKey]];
-                
+
                 return {
                     ...previousOfKeys,
                     [currentKey]: !!previousDataMatch?.length || currentDataMatch ? [...previousDataMatch ?? [], ...currentDataMatch ?? []] : null
@@ -76,7 +78,7 @@ export class GenerateReportUseCases {
         try {
 
             const options: ParserArchiveContract.OptionsCreate = {
-                output: path.resolve(`${mainSettings.DIRECTORY_OUTPUT_REPORTER}/report-${Date.now()}.pdf`)
+                output: GenerateReportUseCases.pathOutput
             }
             const strTemplate = fs.readFileSync(path.resolve('public', 'template-report.html'), 'utf-8');
             const template = handlebars.compile(strTemplate);
